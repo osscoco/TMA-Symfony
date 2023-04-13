@@ -1,88 +1,90 @@
-Symfony Demo Application
+Symfony Twitter Application
 ========================
 
-The "Symfony Demo Application" is a reference application created to show how
-to develop applications following the [Symfony Best Practices][1].
+L'application Symfony Twitter a pour but de faire intéragir plusieurs personnes comme le vrai réseau social Twitter.
 
-You can also learn about these practices in [the official Symfony Book][5].
-
-Requirements
+Pré requis
 ------------
 
   * PHP 8.1.0 or higher;
-  * PDO-SQLite PHP extension enabled;
-  * and the [usual Symfony application requirements][2].
+  * MySQL
 
-Installation
+Récupération GIT
 ------------
 
-There are 3 different ways of installing this project depending on your needs:
-
-**Option 1.** [Download Symfony CLI][4] and use the `symfony` binary installed
-on your computer to run this command:
+Créez un repertoire 'SymfonyTwitter', placez-vous dedans et récupérez le projet GIT :
 
 ```bash
-$ symfony new --demo my_project
+$ git clone https://github.com/osscoco/SymfonyTwitter.git
 ```
 
-**Option 2.** [Download Composer][6] and use the `composer` binary installed
-on your computer to run these commands:
+Installation des dépendances
+------------
+
+Ouvez le terminal et executez la commande :
 
 ```bash
-# you can create a new project based on the Symfony Demo project...
-$ composer create-project symfony/symfony-demo my_project
-
-# ...or you can clone the code repository and install its dependencies
-$ git clone https://github.com/symfony/demo.git my_project
-$ cd my_project/
 $ composer install
 ```
 
-**Option 3.** Click the following button to deploy this project on Platform.sh,
-the official Symfony PaaS, so you can try it without installing anything locally:
-
-<p align="center">
-<a href="https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/symfonycorp/platformsh-symfony-template-metadata/main/symfony-demo.template.yaml&utm_content=symfonycorp&utm_source=github&utm_medium=button&utm_campaign=deploy_on_platform"><img src="https://platform.sh/images/deploy/lg-blue.svg" alt="Deploy on Platform.sh" width="180px" /></a>
-</p>
-
-Usage
------
-
-There's no need to configure anything before running the application. There are
-2 different ways of running this application depending on your needs:
-
-**Option 1.** [Download Symfony CLI][4] and run this command:
+Configuration .env
+------------
 
 ```bash
-$ cd my_project/
-$ symfony serve
+# DO NOT DEFINE PRODUCTION SECRETS IN THIS FILE NOR IN ANY OTHER COMMITTED FILES.
+# https://symfony.com/doc/current/configuration/secrets.html
+#
+# Run "composer dump-env prod" to compile .env files for production use (requires symfony/flex >=1.2).
+# https://symfony.com/doc/current/best_practices.html#use-environment-variables-for-infrastructure-configuration
+
+###> symfony/framework-bundle ###
+APP_ENV=dev
+APP_SECRET=6bb6b004d13f9473d432263020fc51d5
+###< symfony/framework-bundle ###
+
+###> doctrine/doctrine-bundle ###
+# Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+# IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
+#
+# DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
+# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8&charset=utf8mb4"
+# DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&charset=utf8"
+DATABASE_URL="mysql://db_username:db_password@host:port/db_name?serverVersion=8.0"
+###< doctrine/doctrine-bundle ###
+
+###> symfony/messenger ###
+# Choose one of the transports below
+# MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
+# MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
+MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
+###< symfony/messenger ###
+
+###> symfony/mailer ###
+# MAILER_DSN=null://null
+###< symfony/mailer ###
 ```
 
-Then access the application in your browser at the given URL (<https://localhost:8000> by default).
+Execution de la migration
+------------
 
-**Option 2.** Use a web server like Nginx or Apache to run the application
-(read the documentation about [configuring a web server for Symfony][3]).
-
-On your local machine, you can run this command to use the built-in PHP web server:
+Ouvez le terminal et executez la commande :
 
 ```bash
-$ cd my_project/
-$ php -S localhost:8000 -t public/
+$ php bin/console doctrine:migration:migrate
+```
+
+Ouverture de l'application
+------------
+
+```bash
+$ php -S localhost:8000 -t public
 ```
 
 Tests
 -----
 
-Execute this command to run tests:
+Executez l'url suivante :
 
 ```bash
-$ cd my_project/
-$ ./bin/phpunit
+$ localhost:8000/api/documentation
 ```
-
-[1]: https://symfony.com/doc/current/best_practices.html
-[2]: https://symfony.com/doc/current/setup.html#technical-requirements
-[3]: https://symfony.com/doc/current/setup/web_server_configuration.html
-[4]: https://symfony.com/download
-[5]: https://symfony.com/book
-[6]: https://getcomposer.org/
