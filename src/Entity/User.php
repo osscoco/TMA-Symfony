@@ -9,48 +9,50 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use \DateTime;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource]
 #[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet email !')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['users', 'private'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users', 'public'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users', 'public'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users', 'public'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users', 'private'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::ARRAY)]
-    #[Groups(['users', 'public'])]
+    #[Groups(['private'])]
     private array $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?\DateTimeInterface $date_creation = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?\DateTimeInterface $date_modification = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tweet::class)]
+    #[Groups(['getAllUsers', 'getOneUser'])]
     private Collection $tweets;
 
     public function __construct()
@@ -180,11 +182,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
-    }
-
-    public function setRoleUser(): self
-    {
-        
     }
 
     public function eraseCredentials()

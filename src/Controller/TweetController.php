@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/tweet')]
 class TweetController extends AbstractController
 {
-    #[Route('/', name: 'app_tweet_index', methods: ['GET'])]
+    #[Route('/', name: 'app_tweet_index', methods: 'GET')]
     public function index(TweetRepository $tweetRepository, Security $security): Response
     {
         if ($this->getUser()) {
