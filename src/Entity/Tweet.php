@@ -5,34 +5,35 @@ namespace App\Entity;
 use App\Repository\TweetRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TweetRepository::class)]
-#[ApiResource]
 class Tweet
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['tweets', 'private'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['tweets', 'public'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?string $label = null;
 
     #[ORM\Column]
-    #[Groups(['tweets', 'public'])]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?int $likes = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?\DateTimeInterface $date_creation = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['getAllUsers', 'getOneUser', 'getAllTweets', 'getOneTweet'])]
     private ?\DateTimeInterface $date_modification = null;
 
     #[ORM\ManyToOne(inversedBy: 'tweets')]
+    #[Groups(['getAllTweets', 'getOneTweet'])]
     private ?User $user = null;
 
     public function getId(): ?int

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Security;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/', name: 'app_racine')]
+    #[Route('/', name: 'app_racine', methods: 'GET')]
     public function index(Security $security): Response
     {
         // Vérifier si l'utilisateur est connecté
