@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Twitter App{% endblock %}
+
+{% block body %}
+
+    <h1>Tweets</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Likes</th>
+                <th>Date_creation</th>
+                <th>Date_modification</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tweet in tweets %}
+            <tr>
+                <td>{{ tweet.id }}</td>
+                <td>{{ tweet.label }}</td>
+                <td>{{ tweet.likes }}</td>
+                <td>{{ tweet.dateCreation ? tweet.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ tweet.dateModification ? tweet.dateModification|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_tweet_show', {'id': tweet.id}) }}">show</a>
+                    <a href="{{ path('app_tweet_edit', {'id': tweet.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tweet_new') }}">Create new</a>
+
+{% endblock %}
