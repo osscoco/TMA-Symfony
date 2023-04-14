@@ -189,7 +189,10 @@ $ php bin/console make:controller ApiController
     
       *	Package.yaml (configurations)
       *	Security.yaml (firewall)
-      * OpenSSL Commande : php bin/console lexik:jwt:generate-token --user-class App\Entity\User emailEnBdd
+      * OpenSSL Commandes : 
+          
+          - php bin/console lexik:jwt:generate-keypair --overwrite (Pour regenerer en cas de besoin private.pem et public.pem)
+          - php bin/console lexik:jwt:generate-token --user-class App\Entity\User emailEnBdd
 
     - Nelmio/ApiDocBundle
       
