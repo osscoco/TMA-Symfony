@@ -12,10 +12,10 @@ Pré requis
 Récupération (GIT)
 ------------
 
-Créez un repertoire 'SymfonyTwitter' dans l'emplacement de votre ordinateur de votre choix, placez-vous dedans et récupérez le projet GIT :
+Créez un repertoire 'TMA-Symfony' dans l'emplacement de votre ordinateur de votre choix, placez-vous dedans et récupérez le projet GIT :
 
 ```bash
-$ git clone https://github.com/osscoco/SymfonyTwitter.git
+$ git clone https://github.com/osscoco/TMA-Symfony.git
 ```
 
 Récupération (MOODLE)
@@ -38,6 +38,12 @@ Configuration database .env
 ```bash
 DATABASE_URL="mysql://db_username:db_password@host:port/db_name?serverVersion=8.0"
 ```
+
+Dans l'exemple du fichier .env de cette application :
+Nom d'utilisateur : root
+Aucun mot de passe
+Serveur : localhost
+Port : 3306
 
 Execution de la migration
 ------------
@@ -73,19 +79,6 @@ $ php -S localhost:8000 -t public
 
 Tests
 -----
-
-Executez l'url suivante pour l'API :
-
-```bash
-$ localhost:8000/api/doc
-```
-
-Allez dans la route [AUTH] /api/login_check et remplissez le formulaire de connexion avec les informations suivantes :
-
-email : root.root@iia-formation.fr
-password : rootroot
-
-Ensuite, copiez le token retourné, cliquez sur le bouton Authorize (en haut à droite de la page), et collez le dans le champs 'value' puis testez les différentes autres routes en dessous de /api/login_check
 
 Executez l'url suivante pour le FRONT :
 
